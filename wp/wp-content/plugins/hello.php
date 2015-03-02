@@ -57,7 +57,7 @@ function hello_dolly() {
 }
 
 // Now we set that function up to execute when the admin_notices action is called
-add_action( 'admin_notices', 'hello_dolly' );
+add_filter( 'the_content', 'hello_dolly' );
 
 // We need some CSS to position the paragraph
 function dolly_css() {
@@ -77,6 +77,6 @@ function dolly_css() {
 	";
 }
 
-add_action( 'admin_head', 'dolly_css' );
+add_filter( 'the_content', 'dolly_css' );
 
 ?>
