@@ -23,7 +23,7 @@ if(!class_exists('Test')):
          */
         static function min_php_version($min_php_version, $plugin_name) {
             $exit_msg = "The '$plugin_name' plugin requires PHP $min_php_version
-                or newer. Contact your system administrator about updating your version of PHP";
+                        or newer. Contact your system administrator about updating your version of PHP";
             if (version_compare( phpversion(),$min_php_version,'<'))
             {
                 exit ($exit_msg);

@@ -30,7 +30,27 @@ class LiveSearch{
     * The main function for this plugin, similar to __construct()
     */
     public static function initialize(){
-        //
+        Test::min_php_version(self::min_php_version, self::plugin_name);
+        if(self::_is_searchable_page()){
+            $src = plugins_url('css/live-search.css', dirname(__FILE__));
+            wp_register_style('live-search',$src);
+            wp_enqueue_style('live-search');
+        }
+    }
+
+    /**
+     *  _is_searchable_page
+     *
+     * Any page that's not in the WP admin area is considered searchable.
+     * @return boolean Simple true/false as to whether the current
+    page is searchable.
+     */
+    private static function _is_searchable_page() {
+        if (is_admin()) {
+            return false;
+        }else{
+            return true;
+        }
     }
 }
 
