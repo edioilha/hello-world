@@ -20,8 +20,8 @@ include_once 'includes/LiveSearch.php';
 include_once 'tests/Test.php';
 
 // Tie into WordPress Hooks and any functions that should run on load.
-add_action('init', 'LiveSearch::initialize');
-add_action('wp_head', 'LiveSearch::head');
+add_action('init', array('LiveSearch', 'initialize'));
+add_action('wp_head', array('LiveSearch','head'));
 
 
 /* EOF */

@@ -7,18 +7,25 @@ a valid URL to where the search handler page lives.
 header('Content-type: text/javascript');
 include_once('../includes/LiveSearch.php');
 $plugin_url = LiveSearch::get_plugin_url();
-$search_handler = $plugin_url . 'ajax_search_results.php';
+$search_handler = $plugin_url . 'ajax_search_results.html';
 //-------------------------------------------------------------------
 ?>
-jQuery(document).ready(main);
-    function main()
-    {
-        // Create a div where we can dynamically send results
-        jQuery('#search-2').append('<div id="ajax_search_results_go_here"></div>');
 
-        // Listen for changes in our search field (<input id="s" >)
-        jQuery('#s').keyup(get_search_results);
-    }
+$(document).ready(function() {
+    $('input[title]').inputHints();
+});
+
+jQuery(document).ready(main);
+
+function main()
+{
+    // Create a div where we can dynamically send results
+    jQuery('#search-2').append('<div id="ajax_search_results_go_here"></div>');
+
+    // Listen for changes in our search field (<input id="s" >)
+    jQuery('#s').keyup(get_search_results);
+}
+
 /*-------------------------------------------------------------------
 SYNOPSIS:
 Query our external search page
@@ -28,30 +35,29 @@ OUTPUT:
 triggers the write_results_to_page() function, writes to console
 for logging.
 --------------------------------------------------------------------*/
-    function get_search_results()
-    {
-        var search_query = jQuery('#s').val();
-        if(search_query != "" && search_query.length > 2 ) {
-            jQuery.get("<?php print $search_handler; ?>", { s:search_query }, write_results_to_page);
-        }else {
-        console.log('Search term empty or too short.');
-    }
+function get_search_results()
+{
+    var search_query = jQuery('#s').val();
+    if(search_query != "" && search_query.length > 2 ) {
+        jQuery.get("<?php print $search_handler; ?>", { s:search_query }, write_results_to_page);
+    }else {
+        console.log('Search term empty or too short.');}
 }
+
 /*-------------------------------------------------------------------
 SYNOPSIS:
 Write the incoming data to the page.
 INPUT:
-data = the html to write to the page
-status = an HTTP code to designate 200 OK or 404 Not Found
+data = the html to write to the page status = an HTTP code to designate 200 OK or 404 Not Found
 xhr = object
 OUTPUT:
 Writes HTML data to the 'ajax_search_results_go_here' id.
 --------------------------------------------------------------------*/
-    function write_results_to_page(data,status, xhr)
-    {
-        if (status == "error") {
-            var msg = "Sorry but there was an error: ";
-            console.error(msg + xhr.status + " " + xhr.statusText);
-        } else {
-            jQuery('#ajax_search_results_go_here').html(data);}
-    }
+function write_results_to_page(data,status,xhr)
+{
+    if (status == "error") {
+        var msg = "Sorry but there was an error: ";
+        console.error(msg + xhr.status + " " + xhr.statusText);
+    } else {
+        jQuery('#ajax_search_results_go_here').html(data);}
+}
