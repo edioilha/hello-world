@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="//localhost/~edio/wp/wp-includes/js/jquery/jquery.js" ></script>
+    <script>
+        jQuery(document).ready(main);
+        function main(){
+            jQuery('#search-2').append('<div id="ajax_search_results_go_here"></div>');
+            //jQuery('#ajax_search_results_go_here').html('<b>TripmasterMonkey!</b>');
+            jQuery('#s').keyup(get_search_results);
+        }
+        function get_search_results(){
+            var search_query = jQuery('#s').val();
+            if(search_query != "" && search_query.length > 2){
+                jQuery.get("ajax_search_results.php", {s:search_query}, write_results_to_page);
+            }
+            else
+            {
+                console.log('Search term is too short');
+            }
+        }
+        function write_results_to_page(data){
+            jQuery('#ajax_search_results_go_here').html(data);
+        }
+    </script>
+</head>
+<body>
+    <input id="s" type="text"/>
+    <div id="ajax_search_results_go_here"></div>
+</body>
+</html>
