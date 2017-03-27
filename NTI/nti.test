@@ -1,0 +1,8 @@
+Class Pessoa
+{
+  private $nome;
+  function __construct($nome)
+  {
+    $this->nome = $nome;
+  }
+}
